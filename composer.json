@@ -1,15 +1,15 @@
 {
     "name": "sendsms/sendsms-laravel",
     "description": "Use our SMS shipping solution to deliver the right information at the right time.",
-    "license": "license",
+    "license": "MTI",
     "authors": [
         {
             "name": "Radu Vasile Catalin",
             "email": "catalin@sendsms.ro"
         }
     ],
-    "homepage": "https://github.com/sendsms/sendsms-laravel",
-    "keywords": ["Laravel", "SendsmsLaravel"],
+    "homepage": "https://github.com/sendSMS-RO/sendsms-laravel",
+    "keywords": ["Laravel", "SendsmsLaravel", "sendsms", "sms", "sendsms-ro"],
     "require": {
         "illuminate/support": "~7|~8"
     },
