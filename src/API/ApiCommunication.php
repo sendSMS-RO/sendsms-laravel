@@ -16,36 +16,24 @@ class ApiCommunication
 
     function call_api($url)
     {
-        $this->guzzle = Request::getInstance();
-        
-        curl_setopt($this->curl, CURLOPT_HEADER, 1);
-        curl_setopt($this->curl, CURLOPT_URL, $url);
-        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($this->curl, CURLINFO_HEADER_OUT, true);
-        curl_setopt($this->curl, CURLOPT_HTTPHEADER, array("Connection: keep-alive"));
+        $response = Http::withHeaders([
+            "Connection" => "keep-alive"
+        ])->get($url);
 
-        $result = curl_exec($this->curl);
-
-        $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
-        $request_headers = curl_getinfo($this->curl, CURLINFO_HEADER_OUT);
-        $response_headers = substr($result, 0, $size);
-        $result = substr($result, $size);
-
-        // $this->debug("--- HTTP Request trace --- ");
-        // $this->debug($request_headers, false);
-        // $this->debug($response_headers, false);
-        // $this->debug($result);
-
-        if ($result !== FALSE) {
-            return json_decode($result, true);
+        if ($response->successful()) {
+            if ($this->ok($response->json())) {
+                return $response->json();
+            }
+        } else {
+            Logger::error("SendSMS: Unable to make the request");
         }
-        return false;
     }
 
     function call_api_action($method, $params, $authenticate = true)
     {
         $this->username = env("SENDSMS_USERNAME", null);
         $this->password = env("SENDSMS_PASSWORD", null);
+        Logger::debug($this->username . " --- " . $this->password);
         if ($this->performActionsImmediately) {
             $url = $this->url . "?action=" . urlencode($method->getName());
             if ($authenticate) {
@@ -53,7 +41,7 @@ class ApiCommunication
                     $url .= "&username=" . urlencode($this->username);
                     $url .= "&password=" . urlencode($this->password);
                 } else {
-                    Logger::error("You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD)");
+                    Logger::error("SendSMS: You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD)");
                     return FALSE;
                 }
             }
@@ -69,7 +57,7 @@ class ApiCommunication
             return $this->call_api($url);
         } else {
             if (!is_null($this->username) && !is_null($this->password)) {
-                Logger::error("You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD) to perform bulk actions");
+                Logger::error("SendSMS: You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD) to perform bulk actions");
                 return FALSE;
             }
             $action = array(
@@ -84,5 +72,20 @@ class ApiCommunication
             $this->queuedActions[] = $action;
             return TRUE;
         }
+    }
+
+    function ok($result)
+    {
+        if (is_array($result)) {
+            if (array_key_exists('status', $result)) {
+                if ($result['status'] >= 0) {
+                    return TRUE;
+                }
+                Logger::error($result['message']);
+            }
+        } else {
+            Logger::error("SendSMS: Error communicating with API");
+        }
+        return FALSE;
     }
 }
