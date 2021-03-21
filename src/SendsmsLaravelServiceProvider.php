@@ -3,6 +3,7 @@
 namespace SendSMS\SendsmsLaravel;
 
 use Illuminate\Support\ServiceProvider;
+use SendSMS\SendsmsLaravel\ApiRequest;
 
 class SendsmsLaravelServiceProvider extends ServiceProvider
 {
@@ -35,7 +36,7 @@ class SendsmsLaravelServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('sendsms-laravel', function ($app) {
-            return new SendsmsLaravel;
+            return new ApiRequest;
         });
     }
 

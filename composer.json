@@ -11,7 +11,8 @@
     "homepage": "https://github.com/sendSMS-RO/sendsms-laravel",
     "keywords": ["Laravel", "SendsmsLaravel", "sendsms", "sms", "sendsms-ro"],
     "require": {
-        "illuminate/support": "~7|~8"
+        "illuminate/support": "~7|~8",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~9.0",
