@@ -91,8 +91,6 @@ class Batch extends ApiCommunication
             $result = curl_exec($this->curl);
 
             $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
-            $request_headers = curl_getinfo($this->curl, CURLINFO_HEADER_OUT);
-            $response_headers = substr($result, 0, $size);
             $result = substr($result, $size);
 
             if ($result !== FALSE) {

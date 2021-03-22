@@ -13,6 +13,52 @@ class ApiCommunication
     var $password;
     var $performActionsImmediately = true;
     var $queuedActions = array();
+    var $curl = false;
+
+    /**
+     *   This action allows you to execute multiple actions within the API with a single request.
+     *
+     *   @global string $username
+     *   @global string $password
+     */
+    function execute_multiple()
+    {
+        if (function_exists('curl_init')) {
+            if ($this->curl === FALSE) {
+                $this->curl = curl_init();
+            } else {
+                curl_close($this->curl);
+                $this->curl = curl_init();
+            }
+
+            $url = $this->url . "?action=execute_multiple";
+            $url .= "&username=" . urlencode($this->username);
+            $url .= "&password=" . urlencode($this->password);
+
+            curl_setopt($this->curl, CURLOPT_HEADER, 1);
+            curl_setopt($this->curl, CURLOPT_URL, $url);
+            curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($this->curl, CURLINFO_HEADER_OUT, true);
+            curl_setopt($this->curl, CURLOPT_POST, 1);
+            curl_setopt($this->curl, CURLOPT_POSTFIELDS, "data=" . urlencode(json_encode($this->queuedActions)));
+            curl_setopt($this->curl, CURLOPT_HTTPHEADER, array("Connection: keep-alive"));
+
+            $result = curl_exec($this->curl);
+
+            $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+            $request_headers = curl_getinfo($this->curl, CURLINFO_HEADER_OUT);
+            $response_headers = substr($result, 0, $size);
+            $result = substr($result, $size);
+
+            if ($result !== FALSE) {
+                return json_decode($result, true);
+            }
+            return false;
+        } else {
+            Logger::error("SendSMS: You need cURL to use this API Library");
+        }
+        return FALSE;
+    }
 
     function call_api($url)
     {
@@ -21,12 +67,19 @@ class ApiCommunication
         ])->get($url);
 
         if ($response->successful()) {
-            if ($this->ok($response->json())) {
-                return $response->json();
-            }
+            return $response->json();
         } else {
             Logger::error("SendSMS: Unable to make the request");
         }
+    }
+
+    /**
+     *   @global string $username
+     *   @global string $password
+     */
+    function performActionsImmediately($state)
+    {
+        $this->performActionsImmediately = $state;
     }
 
     function call_api_action($method, $params, $authenticate = true)
@@ -55,7 +108,7 @@ class ApiCommunication
 
             return $this->call_api($url);
         } else {
-            if (!is_null($this->username) && !is_null($this->password)) {
+            if (is_null($this->username) || is_null($this->password)) {
                 Logger::error("SendSMS: You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD) to perform bulk actions");
                 return false;
             }
@@ -71,20 +124,5 @@ class ApiCommunication
             $this->queuedActions[] = $action;
             return TRUE;
         }
-    }
-
-    function ok($result)
-    {
-        if (is_array($result)) {
-            if (array_key_exists('status', $result)) {
-                if ($result['status'] >= 0) {
-                    return TRUE;
-                }
-                Logger::error("SendSMS: " . $result['message'] . " - " . $result['details']['ErrorMessages']);
-            }
-        } else {
-            Logger::error("SendSMS: Error communicating with API");
-        }
-        return FALSE;
     }
 }
