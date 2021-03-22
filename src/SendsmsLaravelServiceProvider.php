@@ -35,9 +35,9 @@ class SendsmsLaravelServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/sendsms-laravel.php', 'sendsms-laravel');
 
         // Register the service the package provides.
-        $this->app->singleton('sendsms-laravel', function ($app) {
-            return new ApiRequest;
-        });
+        // $this->app->singleton('sendsms-laravel', function ($app) {
+        //     return new ApiRequest;
+        // });
     }
 
     /**

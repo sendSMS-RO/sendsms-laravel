@@ -43,4 +43,3 @@ license. Please see the [license file](license.md) for more information.
 [link-packagist]: https://packagist.org/packages/sendsms/sendsms-laravel
 [link-downloads]: https://packagist.org/packages/sendsms/sendsms-laravel
 [link-travis]: https://travis-ci.org/sendsms/sendsms-laravel
-[link-styleci]: https://styleci.io/repos/12345678

@@ -33,7 +33,6 @@ class ApiCommunication
     {
         $this->username = env("SENDSMS_USERNAME", null);
         $this->password = env("SENDSMS_PASSWORD", null);
-        Logger::debug($this->username . " --- " . $this->password);
         if ($this->performActionsImmediately) {
             $url = $this->url . "?action=" . urlencode($method->getName());
             if ($authenticate) {
@@ -42,7 +41,7 @@ class ApiCommunication
                     $url .= "&password=" . urlencode($this->password);
                 } else {
                     Logger::error("SendSMS: You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD)");
-                    return FALSE;
+                    return false;
                 }
             }
             $parameters = $method->getParameters();
@@ -58,7 +57,7 @@ class ApiCommunication
         } else {
             if (!is_null($this->username) && !is_null($this->password)) {
                 Logger::error("SendSMS: You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD) to perform bulk actions");
-                return FALSE;
+                return false;
             }
             $action = array(
                 'command' => $method->getName(),
@@ -81,7 +80,7 @@ class ApiCommunication
                 if ($result['status'] >= 0) {
                     return TRUE;
                 }
-                Logger::error($result['message']);
+                Logger::error("SendSMS: " . $result['message'] . " - " . $result['details']['ErrorMessages']);
             }
         } else {
             Logger::error("SendSMS: Error communicating with API");
