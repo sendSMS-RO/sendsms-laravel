@@ -14,15 +14,11 @@ $ composer require sendsms/sendsms-laravel
 
 ## Usage
 
+Go [here](https://www.sendsms.ro/api/) for documentation
+
 ## Change log
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
-
-## Testing
-
-``` bash
-$ composer test
-```
 
 ## Security
 
