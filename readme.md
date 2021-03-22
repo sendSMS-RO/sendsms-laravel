@@ -4,6 +4,9 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Build Status][ico-travis]][link-travis]
 
+## Compatibility 
+
+You need at least Laravel 8
 ## Installation
 
 Via Composer
@@ -27,10 +30,6 @@ If you discover any security related issues, please email catalin@sendsms.ro ins
 ## Credits
 
 - Radu Vasile Catalin
-
-## License
-
-license. Please see the [license file](license.md) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/sendsms/sendsms-laravel.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/sendsms/sendsms-laravel.svg?style=flat-square
