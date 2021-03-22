@@ -31,9 +31,9 @@ class Message extends ApiCommunication
     function messages_statistics($user_id = null, $start_date = null, $end_date = null)
     {
         $args = func_get_args();
-        return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args); 
+        return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
     }
- 
+
     /**
      *   Send an SMS message
      *
