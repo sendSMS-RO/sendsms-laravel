@@ -2,7 +2,6 @@
 
 namespace SendSMS\SendsmsLaravel\API;
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log as Logger;
 
 class ApiCommunication
@@ -46,8 +45,6 @@ class ApiCommunication
             $result = curl_exec($this->curl);
 
             $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
-            $request_headers = curl_getinfo($this->curl, CURLINFO_HEADER_OUT);
-            $response_headers = substr($result, 0, $size);
             $result = substr($result, $size);
 
             if ($result !== FALSE) {
@@ -62,15 +59,33 @@ class ApiCommunication
 
     function call_api($url)
     {
-        $response = Http::withHeaders([
-            "Connection" => "keep-alive"
-        ])->get($url);
+        if (function_exists('curl_init')) {
+            if ($this->curl === FALSE) {
+                $this->curl = curl_init();
+            } else {
+                curl_close($this->curl);
+                $this->curl = curl_init();
+            }
+            curl_setopt($this->curl, CURLOPT_HEADER, 1);
+            curl_setopt($this->curl, CURLOPT_URL, $url);
+            curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($this->curl, CURLINFO_HEADER_OUT, true);
+            curl_setopt($this->curl, CURLOPT_HTTPHEADER, array("Connection: keep-alive"));
 
-        if ($response->successful()) {
-            return $response->json();
+            $result = curl_exec($this->curl);
+
+            $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+            $result = substr($result, $size);
+
+            if ($result !== FALSE) {
+                return json_decode($result, true);
+            }
+            return false;
         } else {
-            Logger::error("SendSMS: Unable to make the request");
+            Logger::alert("SendSMS: You need cURL to use this API Library");
         }
+
+        return FALSE;
     }
 
     /**
