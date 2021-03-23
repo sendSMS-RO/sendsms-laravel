@@ -1,12 +1,6 @@
 # SendsmsLaravel
-
-[![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
-[![Build Status][ico-travis]][link-travis]
 
-## Compatibility 
-
-You need at least Laravel 8
 ## Installation
 
 Via Composer
@@ -17,12 +11,18 @@ $ composer require sendsms/sendsms-laravel
 
 ## Usage
 
-Go [here](https://www.sendsms.ro/api/) for documentation
+If you need to see a full list of examples of our package, please go to our [API Documentation](https://www.sendsms.ro/api/?php--laravel)
 
-## Change log
-
-Please see the [changelog](changelog.md) for more information on what has changed recently.
-
+| Namespace |
+| --------- |
+[SendSMS\SendsmsLaravel\API\AddressBook] (https://www.sendsms.ro/api/?php--laravel#address-book) 
+[SendSMS\SendsmsLaravel\API\Batch] (https://www.sendsms.ro/api/?php--laravel#batch) 
+[SendSMS\SendsmsLaravel\API\Blocklist] (https://www.sendsms.ro/api/?php--laravel#blocklist) 
+[SendSMS\SendsmsLaravel\API\HLR] (https://www.sendsms.ro/api/?php--laravel#hlr) 
+[SendSMS\SendsmsLaravel\API\Message] (https://www.sendsms.ro/api/?php--laravel#message) 
+[SendSMS\SendsmsLaravel\API\MNP] (https://www.sendsms.ro/api/?php--laravel#mnp) 
+[SendSMS\SendsmsLaravel\API\User] (https://www.sendsms.ro/api/?php--laravel#user) 
+[SendSMS\SendsmsLaravel\API\Other] (https://www.sendsms.ro/api/?php--laravel#other) 
 ## Security
 
 If you discover any security related issues, please email catalin@sendsms.ro instead of using the issue tracker.
@@ -31,10 +31,6 @@ If you discover any security related issues, please email catalin@sendsms.ro ins
 
 - Radu Vasile Catalin
 
-[ico-version]: https://img.shields.io/packagist/v/sendsms/sendsms-laravel.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/sendsms/sendsms-laravel.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/sendsms/sendsms-laravel/master.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/sendsms/sendsms-laravel
 [link-downloads]: https://packagist.org/packages/sendsms/sendsms-laravel
-[link-travis]: https://travis-ci.org/sendsms/sendsms-laravel
