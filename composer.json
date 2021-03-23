@@ -1,7 +1,6 @@
 {
     "name": "sendsms/sendsms-laravel",
     "description": "Use our SMS shipping solution to deliver the right information at the right time.",
-    "license": "MTI",
     "authors": [
         {
             "name": "Radu Vasile Catalin",
@@ -32,10 +31,7 @@
         "laravel": {
             "providers": [
                 "SendSMS\\SendsmsLaravel\\SendsmsLaravelServiceProvider"
-            ],
-            "aliases": {
-                "SendsmsLaravel": "SendSMS\\SendsmsLaravel\\Facades\\SendsmsLaravel"
-            }
+            ]
         }
     }
 }
