@@ -10,8 +10,6 @@
     ],
     "homepage": "https://github.com/sendSMS-RO/sendsms-laravel",
     "keywords": ["Laravel", "SendsmsLaravel", "sendsms", "sms", "sendsms-ro"],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "illuminate/support": ">=5"
     },
