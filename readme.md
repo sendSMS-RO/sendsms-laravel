@@ -11,7 +11,7 @@ $ composer require sendsms/sendsms-laravel
 
 ## Usage
 
-In your .env file, add this to variables: 
+In your .env file, add this variables: 
 ```
 SENDSMS_USERNAME 
 SENDSMS_PASSWORD
