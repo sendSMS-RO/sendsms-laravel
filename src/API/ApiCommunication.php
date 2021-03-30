@@ -88,10 +88,6 @@ class ApiCommunication
         return FALSE;
     }
 
-    /**
-     *   @global string $username
-     *   @global string $password
-     */
     function performActionsImmediately($state)
     {
         $this->performActionsImmediately = $state;

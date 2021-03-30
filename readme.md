@@ -30,6 +30,7 @@ If you need to see a full list of examples of our package, please go to our [API
 [SendSMS\SendsmsLaravel\API\MNP](https://www.sendsms.ro/api/?php--laravel#mnp) 
 [SendSMS\SendsmsLaravel\API\User](https://www.sendsms.ro/api/?php--laravel#user) 
 [SendSMS\SendsmsLaravel\API\Other](https://www.sendsms.ro/api/?php--laravel#other) 
+[SendSMS\SendsmsLaravel\API\ApiKey](https://www.sendsms.ro/api/?php--laravel#api-key-2) 
 
 ### How to send a message
 
