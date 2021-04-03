@@ -13,6 +13,7 @@ class ApiCommunication
     var $performActionsImmediately = true;
     var $queuedActions = array();
     var $curl = false;
+    var $debugState = false;
 
     /**
      *   This action allows you to execute multiple actions within the API with a single request.
@@ -34,6 +35,8 @@ class ApiCommunication
             $url .= "&username=" . urlencode($this->username);
             $url .= "&password=" . urlencode($this->password);
 
+            $this->debug($url);
+            $this->debug("data=" . urlencode(json_encode($this->queuedActions)));
             curl_setopt($this->curl, CURLOPT_HEADER, 1);
             curl_setopt($this->curl, CURLOPT_URL, $url);
             curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
@@ -52,7 +55,7 @@ class ApiCommunication
             }
             return false;
         } else {
-            Logger::error("SendSMS: You need cURL to use this API Library");
+            $this->debug("You need cURL to use this API Library");
         }
         return FALSE;
     }
@@ -66,6 +69,7 @@ class ApiCommunication
                 curl_close($this->curl);
                 $this->curl = curl_init();
             }
+            $this->debug($url);
             curl_setopt($this->curl, CURLOPT_HEADER, 1);
             curl_setopt($this->curl, CURLOPT_URL, $url);
             curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
@@ -82,7 +86,7 @@ class ApiCommunication
             }
             return false;
         } else {
-            Logger::alert("SendSMS: You need cURL to use this API Library");
+            $this->debug("You need cURL to use this API Library");
         }
 
         return FALSE;
@@ -104,7 +108,7 @@ class ApiCommunication
                     $url .= "&username=" . urlencode($this->username);
                     $url .= "&password=" . urlencode($this->password);
                 } else {
-                    Logger::error("SendSMS: You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD)");
+                    $this->debug("You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD)");
                     return false;
                 }
             }
@@ -120,7 +124,7 @@ class ApiCommunication
             return $this->call_api($url);
         } else {
             if (is_null($this->username) || is_null($this->password)) {
-                Logger::error("SendSMS: You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD) to perform bulk actions");
+                $this->debug("You need to specify your username and password in your .env file (SENDSMS_USERNAME and SENDSMS_PASSWORD) to perform bulk actions");
                 return false;
             }
             $action = array(
@@ -134,6 +138,18 @@ class ApiCommunication
             }
             $this->queuedActions[] = $action;
             return TRUE;
+        }
+    }
+
+    function setDebugState($state)
+    {
+        $this->debugState = $state;
+    }
+
+    function debug($str)
+    {
+        if ($this->debug) {
+            Logger::error("SendSMS: " . $str);
         }
     }
 }

@@ -58,7 +58,7 @@ class Batch extends ApiCommunication
             $this->password = env("SENDSMS_PASSWORD", null);
 
             if (!Storage::exists($file)) {
-                Logger::error("File {$file} does not exist");
+                $this->debug("File {$file} does not exist");
                 return FALSE;
             }
 
@@ -80,6 +80,8 @@ class Batch extends ApiCommunication
                 $url .= "&start_time=" . urlencode($start_time);
             }
 
+            $this->debug($url);
+            $this->debug($data);
             curl_setopt($this->curl, CURLOPT_HEADER, 1);
             curl_setopt($this->curl, CURLOPT_URL, $url);
             curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
@@ -98,7 +100,7 @@ class Batch extends ApiCommunication
             }
             return false;
         } else {
-            Logger::error("SendSMS: You need cURL to use this API Library");
+            $this->debug("You need cURL to use this API Library");
         }
     }
 
