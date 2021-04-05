@@ -49,11 +49,7 @@ $api->message_send('40727363767', 'This is a message', '1898');
 
 ## Security
 
-If you discover any security related issues, please email catalin@sendsms.ro instead of using the issue tracker.
-
-## Credits
-
-- Radu Vasile Catalin
+If you discover any security related issues, please email support@sendsms.ro instead of using the issue tracker.
 
 [ico-downloads]: https://img.shields.io/packagist/dt/sendsms/sendsms-laravel.svg?style=flat-square
 
