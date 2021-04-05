@@ -4,8 +4,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Radu Vasile Catalin",
-            "email": "catalin@sendsms.ro"
+            "name": "sendSMS",
+            "email": "support@sendsms.ro"
         }
     ],
     "homepage": "https://github.com/sendSMS-RO/sendsms-laravel",
