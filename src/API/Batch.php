@@ -48,12 +48,8 @@ class Batch extends ApiCommunication
     function batch_create($name, $file, $throughput = 0, $filter = false, $file_type = 'csv', $start_time = null)
     {
         if (function_exists('curl_init')) {
-            if ($this->curl === FALSE) {
                 $this->curl = curl_init();
-            } else {
-                curl_close($this->curl);
-                $this->curl = curl_init();
-            }
+
             $this->username = env("SENDSMS_USERNAME", null);
             $this->password = env("SENDSMS_PASSWORD", null);
 
@@ -93,6 +89,7 @@ class Batch extends ApiCommunication
             $result = curl_exec($this->curl);
 
             $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+            curl_close($this->curl);
             $result = substr($result, $size);
 
             if ($result !== FALSE) {

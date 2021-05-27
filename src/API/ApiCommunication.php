@@ -24,12 +24,7 @@ class ApiCommunication
     function execute_multiple()
     {
         if (function_exists('curl_init')) {
-            if ($this->curl === FALSE) {
-                $this->curl = curl_init();
-            } else {
-                curl_close($this->curl);
-                $this->curl = curl_init();
-            }
+            $this->curl = curl_init();
 
             $url = $this->url . "?action=execute_multiple";
             $url .= "&username=" . urlencode($this->username);
@@ -48,6 +43,7 @@ class ApiCommunication
             $result = curl_exec($this->curl);
 
             $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+            curl_close($this->curl);
             $result = substr($result, $size);
 
             if ($result !== FALSE) {
@@ -63,12 +59,8 @@ class ApiCommunication
     function call_api($url)
     {
         if (function_exists('curl_init')) {
-            if ($this->curl === FALSE) {
-                $this->curl = curl_init();
-            } else {
-                curl_close($this->curl);
-                $this->curl = curl_init();
-            }
+            $this->curl = curl_init();
+
             $this->debug($url);
             curl_setopt($this->curl, CURLOPT_HEADER, 1);
             curl_setopt($this->curl, CURLOPT_URL, $url);
@@ -79,6 +71,7 @@ class ApiCommunication
             $result = curl_exec($this->curl);
 
             $size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+            curl_close($this->curl);
             $result = substr($result, $size);
 
             if ($result !== FALSE) {
@@ -148,7 +141,7 @@ class ApiCommunication
 
     function debug($str)
     {
-        if ($this->debug) {
+        if ($this->debugState) {
             Logger::error("SendSMS: " . $str);
         }
     }
