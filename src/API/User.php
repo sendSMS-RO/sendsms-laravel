@@ -55,4 +55,16 @@ class User extends ApiCommunication
         $args = func_get_args();
         return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
     }
+
+    /**
+     *   Get the pricing for each network per country for the user's account
+     *
+     *   @global string $username
+     *   @global string $password
+     */
+    function get_user_pricing_list()
+    {
+        $args = func_get_args();
+        return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
+    }
 }
