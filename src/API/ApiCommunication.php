@@ -92,8 +92,8 @@ class ApiCommunication
 
     function call_api_action($method, $params, $authenticate = true)
     {
-        $this->username = env("SENDSMS_USERNAME", null);
-        $this->password = env("SENDSMS_PASSWORD", null);
+        $this->username = config('sendsms-laravel.username');
+        $this->password = config('sendsms-laravel.password');
         if ($this->performActionsImmediately) {
             $url = $this->url . "?action=" . urlencode($method->getName());
             if ($authenticate) {

@@ -50,8 +50,8 @@ class Batch extends ApiCommunication
         if (function_exists('curl_init')) {
                 $this->curl = curl_init();
 
-            $this->username = env("SENDSMS_USERNAME", null);
-            $this->password = env("SENDSMS_PASSWORD", null);
+            $this->username = config('sendsms-laravel.username');
+            $this->password = config('sendsms-laravel.password');
 
             if (!Storage::exists($file)) {
                 $this->debug("File {$file} does not exist");
