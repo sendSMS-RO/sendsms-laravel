@@ -49,9 +49,10 @@ class Message extends ApiCommunication
      *   @param int $message_class (optional): Message class
      *   @param int $auto_detect_encoding (optional): Auto detect the encoding and send appropriately 1 = on, 0 = off.
      *   @param string/boolean $short (optional): 1. "string" Add sort url at the end of message or search for key {short} in message and replace with short url when parameter contain URL
+     * @param int $ctype (optional): 1 = SMS (Default), 2 = RCS - (not active yet), 3 = Viber (failover to SMS if undelivered)
      *                                            2. "boolean" Searches long url and replaces them with coresponding sort url when shrot parameter is "true"
      */
-    function message_send($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null, $short = false)
+    function message_send($to, $text, $from = null, $report_mask = 19, $report_url = null, $charset = null, $data_coding = null, $message_class = -1, $auto_detect_encoding = null, $short = false, $ctype = 1)
     {
         $args = func_get_args();
         return $this->call_api_action(new ReflectionMethod(__CLASS__, __FUNCTION__), $args);
